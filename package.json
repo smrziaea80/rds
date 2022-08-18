@@ -1,0 +1,35 @@
+{
+   "name": "webpack-demo",
+   "version": "1.0.0",
+   "description": "",
+   "private": true,
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "build": "webpack"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "MIT",
+   "devDependencies": {
+      "webpack": "^5.38.1",
+      "webpack-cli": "^4.7.2"
+   },
+   "dependencies": {
+      "bootstrap": "^5.2.0",
+      "brfs": "^1.6.1",
+      "chart.js": "^3.9.1",
+      "glslify": "^7.1.1",
+      "ify-loader": "^1.1.0",
+      "jquery": "^3.6.0",
+      "lodash": "^4.17.21",
+      "plotly.js-dist": "^2.13.3",
+      "quickchart-js": "^3.0.2",
+      "react": "^18.2.0"
+   },
+   "browserify": {
+      "transform": [
+         "glslify",
+         "brfs"
+      ]
+   }
+}

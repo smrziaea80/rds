@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+  <head>
+   
+    <meta charset="utf-8" />
+    <title>Getting Started</title>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../node_modules/quickchart-js/build/quickchart.js"></script>
+    
+
+ 
+    <script src="../src/data.js"></script>
+    <script src="../src/functions.js"></script>     
+    <script src="../src/layout.js"></script>
+
+
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css ">
+    <link rel="stylesheet" href="../dist/custom.css">
+
+
+  </head>
+  <body class="cbody">
+  <div style="padding: 1% 2% 0% 2%">
+  </div>
+  <div class="grid" style="padding:2% ; display:grid; grid-template-columns: 80% 20%;">
+              <div id="GraphContainer">
+                    
+                    <canvas id="myCan" style="width:800px;height:350px"></canvas>
+              </div>
+              
+              <div>
+                      <div class="crb">
+
+                        <b>Data group: </b>
+                        <div class="grid" style="display:grid; grid-template-columns: auto auto auto">
+                          <div>
+                              <input type="radio" id="rb1" name="rbDataGroup" value="0" checked="checked"/>
+                              <label for="rb1">Capacity</label></div>
+                          <div><input type="radio" id="rb2" name="rbDataGroup" value="1"/>
+                              <label for="rb2">Generation</label>
+                          </div>  
+                          <div><input type="radio" id="rb3" name="rbDataGroup" value="2"/>
+                              <label for="rb3">Nuclear Share</label></div>
+                      </div>
+                      </div>
+                      <div>
+                        <p></p>
+                      </div>
+                      <div class="ccb">
+                          <b>Projections years: </b><input id="cball"   type="checkbox" name="cbYears" checked> Select all 
+                          <div  style="display:grid; grid-template-columns: auto auto auto auto auto auto">
+                            <div><input id="cb2001"   type="checkbox" name="cbYears" checked> 2001 </div>
+                              <div><input id="cb2002"   type="checkbox" name="cbYears" checked> 2002 </div>   
+                                <div><input id="cb2003"   type="checkbox" name="cbYears" checked> 2003 </div>
+                                  <div><input id="cb2004"   type="checkbox" name="cbYears" checked> 2004  </div>
+                                    <div><input id="cb2005"   type="checkbox" name="cbYears" checked> 2005</div>
+                                      <div><input id="cb2006"   type="checkbox" name="cbYears" checked> 2006  </div>
+                                        <div><input id="cb2007"   type="checkbox" name="cbYears" checked> 2007  </div>
+                                          <div><input id="cb2008"   type="checkbox" name="cbYears" checked> 2008   </div>
+                                            <div><input id="cb2009"   type="checkbox" name="cbYears" checked> 2009  </div> 
+                                              <div><input id="cb2010"   type="checkbox" name="cbYears" checked> 2010  </div>   
+                                                <div><input id="cb2011"   type="checkbox" name="cbYears" checked> 2011  </div> 
+                                                  <div><input id="cb2012"   type="checkbox" name="cbYears" checked> 2012  </div> 
+                                                    <div><input id="cb2013"   type="checkbox" name="cbYears" checked> 2013  </div>
+                                                      <div><input id="cb2014"   type="checkbox" name="cbYears" checked> 2014</div>
+                                                        <div><input id="cb2015"   type="checkbox" name="cbYears" checked> 2015  </div> 
+                                                          <div><input id="cb2016"   type="checkbox" name="cbYears" checked> 2016 </div>  
+                                                            <div><input id="cb2017"   type="checkbox" name="cbYears" checked> 2017   </div>
+                                                              <div><input id="cb2018"   type="checkbox" name="cbYears" checked> 2018  </div> 
+                                                                <div><input id="cb2019"   type="checkbox" name="cbYears" checked> 2019 </div>  
+                                                                  <div><input id="cb2020"   type="checkbox" name="cbYears" checked> 2020 </div>       
+                                                                    <div><input id="cb2021"   type="checkbox" name="cbYears" checked> 2021 </div>  
+                            </div>
+                          </div>
+
+
+
+                          <div>
+                            <p></p>
+                          </div>
+
+                          <div class="grid" style="display:grid; grid-template-columns: auto auto auto;column-gap: 5px; ">
+                          
+                            <div id="btn_submit" type="button" class="btn btn-outline-primary btn-sm">Submit</div>
+                            <div id="btn_reset"  type="button" class="btn btn-outline-primary btn-sm">Reset</div>
+                            <div id="btn_exportppt"  type="button" class="btn btn-outline-primary btn-sm" onclick="exportppt()">PPT</div>
+                          
+                          </div>
+            </div>
+ </div>
+<div style="padding: 0% 0% 0% 4%;font-family:Arial, Helvetica, sans-serif;font-size: smaller;">
+    Source:
+    <div>&nbsp;&nbsp;&nbsp; 1. Reference Data Series No. 1 : Energy, Electricity and Nuclear Power Estimates for the Period up to 2050 (world nuclear share and projection)</div>
+    <div>&nbsp;&nbsp;&nbsp; 2. Reference Data Series No. 2 : Nuclear Power Reactors in the World (actual capacity and generation)</div>
+
+</div>
+    
+</body >
+<script src="../src/ChartConfig.js"></script> 
+    <script>
+
+
+
+      $("input[name='rbDataGroup']").click(function() {
+        vChartType = this.value;
+        if (vChartType == 0 )
+                {
+                  vyLabel = "Capacity GW(e)";
+                  chartTitle= "Nuclear Power Net Electric Capacity in GW(e)- Actual Vs Projections";
+                  yDataProjValues = yDataProjValuesCap;
+                  
+                }
+                else if (vChartType == 1 )
+                {
+                    vyLabel = "Generation TWh";
+                    chartTitle= "Nuclear Power Generation in TWh - Actual Vs Projections";
+                    yDataProjValues = yDataProjValuesGen;
+
+                }
+                else if (vChartType == 2 )
+                {
+                  vyLabel = "Nuclear Share (%)";
+                  chartTitle= "Nuclear Power Share in World Electricity Generation in Percentage - Actual Vs Projections";
+                  yDataProjValues = yDataProjValuesNS;
+                }
+        var tmpchart = newChart();
+        updateScale(tmpchart);
+      });
+
+
+    var myChart =  newChart();
+    </script>  
+    
+    
+
+
+    <script src="../src/grProj.js"></script>
+    <script src="../src/gr.js"></script>
+    <script>       
+
+      $('#cball').click(function(e) {
+     
+        var chb = $(this).find('input[type="checkbox"]');
+        chb.prop('checked', !chb.prop('checked'));
+
+        for( var x=2001;x<2022;x++){
+          $('#cb'+x).prop('checked', this.checked)
+        }
+      });
+
+
+
+    /*
+    var indx = parseInt(id.substring(2), 10);
+    console.log(indx);
+    animateProj(indx-2000-1)  ;
+    */  
+    
+
+
+    $('#btn_submit').click(function(e) {
+     var tmpchart = newChart();
+     updateScale(tmpchart);
+     animateCapacity(tmpchart, 0); 
+     myChart = tmpchart;
+     
+    });
+
+
+    $('#btn_reset').click(function(e) {
+    //  var tmpchart = newChart();
+    removeData(myChart);
+    });
+
+
+    function exportppt(){
+ 
+    var image = myChart.toBase64Image();
+    console.log(image);
+
+    var a = document.createElement("a"); //Create <a>
+    a.href = image; //Image Base64 Goes here
+    a.download = "Image.png"; //File name Here
+    a.click();
+}
+
+    </script>
+    
+    </html>
